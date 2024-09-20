@@ -1,5 +1,5 @@
 const axios = require('axios');
-const API_KEY = "process.env.GOOGLE_MAPS_API_KEY"; // Replace with your actual API key
+const API_KEY = process.env.GOOGLE_MAPS_API_KEY; // Replace with your actual API key
 
 const getDistanceMatrix = async (req, res) => {
   try {
