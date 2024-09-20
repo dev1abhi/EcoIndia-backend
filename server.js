@@ -9,7 +9,10 @@ const http = require('http');
 const { Server } = require('socket.io'); 
 
 const truckRoutes = require('./routes/truckRoutes');
-const apiRoutes = require('./routes/mapRoutes');
+const mapRoutes = require('./routes/mapRoutes');
+const litterLogRoutes = require('./routes/litterLogRoutes');
+const eventRoutes = require('./routes/eventRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 require('dotenv').config();
 require('./db/db');  //mongodb connection
@@ -28,8 +31,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 // Middleware to use routes
-app.use('/api', apiRoutes);
+app.use('/map', mapRoutes);
 app.use('/truck', truckRoutes);
+app.use('/events', eventRoutes); 
+app.use('/litterlogs', litterLogRoutes);
+app.use('/users', userRoutes);
 
 // Socket.io instance to be used in the controllers
 app.set('socketio', io);
