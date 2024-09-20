@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Event = require('./models/Event');  // Path to Event model
+const Event = require('../db/models/events');  // Path to Event model
 
 // Create a new Event
 const eventAdd = async (req, res) => {
@@ -24,5 +24,8 @@ const eventDelete = async (req, res) => {
         res.status(400).json({ message: 'Error deleting event', error });
     }
 };
+
+// getalleventsroute
+// send json response with all events
 
 module.exports = {eventAdd, eventDelete};

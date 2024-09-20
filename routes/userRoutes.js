@@ -4,6 +4,7 @@ const router = express.Router();
 
 // Define routes
 router.post('/createuser', userController.userAdd);
-router.delete('/deleteuser/:id', userController.userDelete);
+
+router.delete('/deleteuser/:email', userController.userDelete);
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const LitterLog = require('./models/LitterLog');  // Path to LitterLog model
+const LitterLog = require('../db/models/litterlogs');  // Path to LitterLog model
 
 // Create a new LitterLog
 const litterLogAdd =  async (req, res) => {
@@ -24,5 +24,7 @@ const litterLogDelete = async (req, res) => {
         res.status(400).json({ message: 'Error deleting litter log', error });
     }
 };
+
+//get all litterlogs
 
 module.exports = {litterLogAdd, litterLogDelete};
