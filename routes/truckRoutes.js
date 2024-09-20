@@ -3,6 +3,6 @@ const { startJourney } = require('../controllers/truckController');
 const router = express.Router();
 
 // Truck journey route
-router.post('/start-journey', startJourney);
+router.post('/startjourney', startJourney);
 
 module.exports = router;

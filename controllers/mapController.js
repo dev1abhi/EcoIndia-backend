@@ -1,4 +1,5 @@
 const axios = require('axios');
+require('dotenv').config();
 const API_KEY = process.env.GOOGLE_MAPS_API_KEY; // Replace with your actual API key
 
 const getDistanceMatrix = async (req, res) => {
