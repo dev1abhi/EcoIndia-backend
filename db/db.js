@@ -14,3 +14,5 @@ mongoose.connect(dburl, {
 }).catch((e)=>{
     console.log(`connection failed`)
 })
+
+module.exports=mongoose;
