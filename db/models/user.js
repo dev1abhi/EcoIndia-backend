@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -30,6 +29,7 @@ const userSchema = new mongoose.Schema({
 
 
 
+    
     //possible errors!
     regevents:{
         type: [String],

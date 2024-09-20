@@ -27,11 +27,11 @@ const eventSchema = new mongoose.Schema({
     }
 });
 
-// Middleware to update the updatedAt field on document update
-eventSchema.pre('save', function (next) {
-    this.updatedAt = Date.now();
-    next();
-});
+// // Middleware to update the updatedAt field on document update
+// eventSchema.pre('save', function (next) {
+//     this.updatedAt = Date.now();
+//     next();
+// });
 
 // Create the Event model
 const Event = mongoose.model('Event', eventSchema);
