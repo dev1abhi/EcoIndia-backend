@@ -13,6 +13,7 @@ const mapRoutes = require('./routes/mapRoutes');
 const litterLogRoutes = require('./routes/litterLogRoutes');
 const eventRoutes = require('./routes/eventRoutes');
 const userRoutes = require('./routes/userRoutes');
+const binRoutes = require('./routes/binRoutes');
 
 require('dotenv').config();
 require('./db/db');  
@@ -46,6 +47,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 // Middleware to use routes
+app.use('/bins', binRoutes);
 app.use('/map', mapRoutes);
 app.use('/truck', truckRoutes);
 app.use('/events', eventRoutes); 
