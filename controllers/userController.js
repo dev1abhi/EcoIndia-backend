@@ -26,4 +26,14 @@ const userDelete = async (req, res) => {
     }
 };
 
-module.exports = { userAdd, userDelete };
+const checkUser = async (req, res) => {
+    try {
+        const user = await User.findOne({ email: req.params.email });
+        if (!user) return res.status(404).json({ message: 'User not found' });
+        res.status(200).json({ message: 'User found successfully', user });
+    } catch (error) {
+        res.status(400).json({ message: 'Error finding user', error });
+    }
+};
+
+module.exports = { userAdd, userDelete , checkUser};
