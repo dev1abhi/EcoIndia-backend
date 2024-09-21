@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
 
 
 
-    
+
     //possible errors!
     regevents:{
         type: [String],
@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema({
     
     usertype: {
         type: String,
-        enum: ['Admin', 'User'],
+        enum: ['Admin', 'User', 'Trucker'],
         required: true
     }
 });
