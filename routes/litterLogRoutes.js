@@ -5,5 +5,6 @@ const router = express.Router();
 // Define routes for litter logs
 router.post('/litterlogadd', litterLogController.litterLogAdd);
 router.delete('/litterlogdelete/:id', litterLogController.litterLogDelete);
+router.get('/getalllitterlogs', litterLogController.getAllLitterLogs);
 
 module.exports = router;

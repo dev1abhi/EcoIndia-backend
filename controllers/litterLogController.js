@@ -26,5 +26,14 @@ const litterLogDelete = async (req, res) => {
 };
 
 //get all litterlogs
+const getAllLitterLogs = async (req, res) => {
+    try {
+        const litterlogs = await LitterLog.find();
+        res.status(200).json(litterlogs);
+    } catch (error) {
+        res.status(400).json({ message: 'Error getting litter logs', error });
+    }
+}
 
-module.exports = {litterLogAdd, litterLogDelete};
+
+module.exports = {litterLogAdd, litterLogDelete, getAllLitterLogs};
