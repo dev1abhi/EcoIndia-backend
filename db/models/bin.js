@@ -14,9 +14,13 @@ const binSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  number: {  // User's number, can be null
+    type: Number,
+    default: null  // Allow null by default
+  }
 }, { timestamps: true });
 
-// Create the model
+// Create the Bin model
 const Bin = mongoose.model('Bin', binSchema);
 
 module.exports = Bin;

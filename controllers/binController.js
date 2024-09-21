@@ -1,18 +1,47 @@
 // controllers/binController.js
 const Bin = require('../db/models/bin');
+const User = require('../db/models/user');
+
 
 // Controller to add a new bin
-const addBin = async (req, res) => {
-  const { address, lat, lng } = req.body;
+// const addBin = async (req, res) => {
+//   const { address, lat, lng } = req.body;
 
+//   try {
+//     const newBin = new Bin({ address, lat, lng });
+//     await newBin.save();
+//     res.status(201).json({ message: 'Bin added successfully', bin: newBin });
+//   } catch (error) {
+//     res.status(500).json({ message: 'Error adding bin', error });
+//   }
+// };
+
+//bin created by user
+const createBin = async (req, res) => {
   try {
-    const newBin = new Bin({ address, lat, lng });
+    const email = req.body.email;  // Assume email is passed in the request body
+    const user = await User.findOne({email});
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Create a new bin using user's default location and number
+    const newBin = new Bin({
+      address: `Bin for user ${user.name}`,
+      lat: user.deflocation.coordinates[0],  // Latitude
+      lng: user.deflocation.coordinates[1],  // Longitude
+      number: user.number,
+    });
+
     await newBin.save();
-    res.status(201).json({ message: 'Bin added successfully', bin: newBin });
+    res.status(201).json({ message: 'Bin created successfully', bin: newBin });
   } catch (error) {
-    res.status(500).json({ message: 'Error adding bin', error });
+    console.error(error);
+    res.status(500).json({ message: 'Error creating bin' });
   }
 };
+
 
 // Controller to fetch all bin locations
 const getAllBins = async (req, res) => {
@@ -24,4 +53,4 @@ const getAllBins = async (req, res) => {
   }
 };
 
-module.exports = { addBin, getAllBins };
+module.exports = { createBin, getAllBins };
