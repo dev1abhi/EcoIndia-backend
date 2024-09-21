@@ -26,7 +26,6 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: ['https://google-maps-component.vercel.app','http://localhost:3000'], 
-    //origin: ['https://google-maps-component.vercel.app/'], 
     methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"],
   credentials: true,

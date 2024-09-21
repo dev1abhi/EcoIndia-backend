@@ -26,10 +26,6 @@ const userSchema = new mongoose.Schema({
         }
     },
 
-
-
-
-    
     //possible errors!
     regevents:{
         type: [String],

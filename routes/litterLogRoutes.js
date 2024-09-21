@@ -3,7 +3,7 @@ const litterLogController = require('../controllers/litterLogController');
 const router = express.Router();
 
 // Define routes for litter logs
-router.post('/litterlogadd', litterLogController.litterLogAdd);
+router.post('/litter-log-add', litterLogController.litterLogAdd);
 router.delete('/litterlogdelete/:id', litterLogController.litterLogDelete);
 router.get('/getalllitterlogs', litterLogController.getAllLitterLogs);
 
