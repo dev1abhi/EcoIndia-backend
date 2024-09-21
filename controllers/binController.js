@@ -17,7 +17,7 @@ const User = require('../db/models/user');
 // };
 
 //bin created by user
-const createBin = async (req, res) => {
+const createBin = async (req, res , io ) => {
   try {
     const email = req.body.email;  // Assume email is passed in the request body
     const user = await User.findOne({email});
@@ -33,6 +33,9 @@ const createBin = async (req, res) => {
       lng: user.deflocation.coordinates[1],  // Longitude
       number: user.number,
     });
+    
+     // Emit a "binsUpdated" event to notify clients that a new bin has been added
+     io.emit('binsUpdated', { message: 'A new bin has been created' });
 
     await newBin.save();
     res.status(201).json({ message: 'Bin created successfully', bin: newBin });

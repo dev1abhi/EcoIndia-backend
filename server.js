@@ -45,6 +45,11 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Middleware to make io accessible to route handlers
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
 
 // Middleware to use routes
 app.use('/bins', binRoutes);
