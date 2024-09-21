@@ -29,7 +29,7 @@ const litterLogAdd =  async (req, res) => {
        
         res.status(201).json({ message: 'Litter log created successfully', litterLog });
     } catch (error) {
-        res.status(400).json({ message: 'Error creating litter log', error });
+        res.status(400).json({ message: `Error creating litter log , ${location} `, error });
     }
 };
 
