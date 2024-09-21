@@ -12,7 +12,8 @@ const litterLogAdd =  async (req, res) => {
             return res.status(400).json({ message: 'Invalid location data' });
         }
 
-        
+        console.log(location);
+
         const litterLog = new LitterLog({
             location: {
                 latitude: location.latitude,  // Use latitude from the request body
