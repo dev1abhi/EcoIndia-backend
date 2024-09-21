@@ -1,6 +1,6 @@
 // controllers/binController.js
 const Bin = require('../db/models/bin');
-const User = require('../db/models/bin');
+const User = require('../db/models/user');
 
 
 // Controller to add a new bin
@@ -19,7 +19,7 @@ const User = require('../db/models/bin');
 //bin created by user
 const createBin = async (req, res) => {
   try {
-    const email = req.body.email;  // Assume user ID is passed in the request body
+    const email = req.body.email;  // Assume email is passed in the request body
     const user = await User.findOne(email);
 
     if (!user) {
