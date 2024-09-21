@@ -3,8 +3,12 @@ const mongoose = require('mongoose');
 // Create a schema for LitterLogs
 const litterLogSchema = new mongoose.Schema({
     location: {
-        coordinates: {
-            type: [Number],  // Array of numbers: [longitude, latitude]
+        latitude: {
+            type: Number,  // Latitude as a number
+            required: true
+        },
+        longitude: {
+            type: Number,  // Longitude as a number
             required: true
         }
     },

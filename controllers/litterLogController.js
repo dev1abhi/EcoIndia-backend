@@ -6,14 +6,21 @@ const LitterLog = require('../db/models/litterlogs');  // Path to LitterLog mode
 const litterLogAdd =  async (req, res) => {
     try {
         const {  location } = req.body;
-        const litterLog = new LitterLog( location );
+        const litterLog = new LitterLog({
+            location: {
+                latitude: location.latitude,  // Use latitude from the request body
+                longitude: location.longitude  // Use longitude from the request body
+            }
+        });
         await litterLog.save();
+
+        
 
         //automatically creating a bin when a litterlog is added
         const newBin = new Bin({
             address: 'Automatically created bin',
-            lat: location[1],  // Latitude
-            lng: location[0],  // Longitude
+            lat: location.latitude,  // Latitude
+            lng: location.longitude,  // Longitude
             number: null  // You can omit or add a default value for the number if needed
           });
       
