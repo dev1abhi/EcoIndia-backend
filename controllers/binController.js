@@ -20,7 +20,7 @@ const User = require('../db/models/user');
 const createBin = async (req, res) => {
   try {
     const email = req.body.email;  // Assume email is passed in the request body
-    const user = await User.findOne(email);
+    const user = await User.findOne({email});
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
