@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const LitterLog = require('../db/models/litterlogs');  // Path to LitterLog model
+const LitterLog = require('../db/models/litterlogs');
+const Bin = require('../db/models/bin')  // Path to LitterLog model
 
 // Create a new LitterLog
 const litterLogAdd =  async (req, res) => {
