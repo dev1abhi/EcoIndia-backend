@@ -6,6 +6,13 @@ const LitterLog = require('../db/models/litterlogs');  // Path to LitterLog mode
 const litterLogAdd =  async (req, res) => {
     try {
         const {  location } = req.body;
+
+         // Ensure location is defined and has latitude and longitude
+         if (!location || typeof location.latitude !== 'number' || typeof location.longitude !== 'number') {
+            return res.status(400).json({ message: 'Invalid location data' });
+        }
+
+        
         const litterLog = new LitterLog({
             location: {
                 latitude: location.latitude,  // Use latitude from the request body
@@ -29,7 +36,7 @@ const litterLogAdd =  async (req, res) => {
        
         res.status(201).json({ message: 'Litter log created successfully', litterLog });
     } catch (error) {
-        res.status(400).json({ message: `Error creating litter log , ${location} `, error });
+        res.status(400).json({ message: 'Error creating litter log', error });
     }
 };
 
