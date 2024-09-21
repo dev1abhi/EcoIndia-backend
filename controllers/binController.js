@@ -19,8 +19,8 @@ const User = require('../db/models/bin');
 //bin created by user
 const createBin = async (req, res) => {
   try {
-    const userId = req.body.userId;  // Assume user ID is passed in the request body
-    const user = await User.findById(userId);
+    const email = req.body.email;  // Assume user ID is passed in the request body
+    const user = await User.findOne(email);
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -29,8 +29,8 @@ const createBin = async (req, res) => {
     // Create a new bin using user's default location and number
     const newBin = new Bin({
       address: `Bin for user ${user.name}`,
-      lat: user.deflocation.coordinates[1],  // Latitude
-      lng: user.deflocation.coordinates[0],  // Longitude
+      lat: user.deflocation.coordinates[0],  // Latitude
+      lng: user.deflocation.coordinates[1],  // Longitude
       number: user.number,
     });
 
