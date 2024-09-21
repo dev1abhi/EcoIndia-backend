@@ -14,7 +14,7 @@ const getDistanceMatrix = async (req, res) => {
       `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${origins}&destinations=${destinations}&key=${API_KEY}`
     );
 
-    console.log('Distance Matrix response:', response.data);
+    //console.log('Distance Matrix response:', response.data);
     res.json(response.data);
   } catch (error) {
     console.error('Error fetching distance matrix:', error);
