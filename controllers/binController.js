@@ -61,6 +61,17 @@ const notifyBin = async (req, res) => {
       return res.status(404).json({ message: 'No bin found with matching coordinates' });
     }
 
+     // Find the user who owns the bin by matching the bin's number with the user's number
+     const user = await User.findOne({ number: bin.number });
+
+     if (!user) {
+       return res.status(404).json({ message: 'User not found for this bin' });
+     }
+
+
+     // Prepend "+91" to the user's number (if not already there)
+    const userNumber = user.number.toString().startsWith('+91') ? user.number : `+91${user.number}`;
+
     await notificationapi.init(
       process.env.NOTI_API_CLIENTID, // clientId
       process.env.NOTI_API_CLIENTSEC// clientSecret
@@ -70,9 +81,9 @@ const notifyBin = async (req, res) => {
     const notificationResponse = await notificationapi.send({
       notificationId: 'review_required',
       user: {
-        id: "abhilashsarangi222@gmail.com", //user.mail
-        email: "abhilashsarangi222@gmail.com", //user.mail
-        number: "+917064077209" // user.number
+        id: user.email, //user.mail
+        email: user.email, //user.mail
+        number: userNumber // user.number
       },
       mergeTags: {
         "comment": "testComment",
@@ -98,4 +109,40 @@ const getAllBins = async (req, res) => {
   }
 };
 
-module.exports = { createBin, getAllBins ,notifyBin };
+//bin delete by an user
+// Controller to delete a bin by user email and matching location
+const deleteBinByUserLocation = async (req, res, io) => {
+  try {
+    const { email } = req.body;  // Assume email is passed in the request body
+
+    // Find the user by email
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Extract user's latitude and longitude from deflocation
+    const [lng, lat] = user.deflocation.coordinates;
+
+    // Find the bin that matches the user's latitude and longitude
+    const bin = await Bin.findOne({ lat, lng });
+
+    if (!bin) {
+      return res.status(404).json({ message: 'No bin found at the user\'s location' });
+    }
+
+    // Delete the found bin
+    await Bin.findOneAndDelete({ lat, lng });
+
+    // Emit a "binsUpdated" event to notify clients that a bin has been deleted
+    io.emit('binsUpdated', { message: 'A bin has been deleted' });
+
+    res.status(200).json({ message: 'Bin deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting bin:', error);
+    res.status(500).json({ message: 'Error deleting bin' });
+  }
+};
+
+module.exports = { createBin, getAllBins ,notifyBin , deleteBinByUserLocation };
