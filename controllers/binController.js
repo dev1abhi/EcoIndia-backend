@@ -1,6 +1,7 @@
 // controllers/binController.js
 const Bin = require('../db/models/bin');
 const User = require('../db/models/user');
+const notificationapi = require('notificationapi-node-server-sdk').default
 
 
 // Controller to add a new bin
@@ -33,7 +34,7 @@ const createBin = async (req, res , io ) => {
       lng: user.deflocation.coordinates[1],  // Longitude
       number: user.number,
     });
-    
+
      // Emit a "binsUpdated" event to notify clients that a new bin has been added
      io.emit('binsUpdated', { message: 'A new bin has been created' });
 
@@ -42,6 +43,47 @@ const createBin = async (req, res , io ) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error creating bin' });
+  }
+};
+
+
+const notifyBin = async (req, res) => {
+  try {
+    const { lat, lng } = req.body;  // Get lat/lng from the request body
+
+    // Find the bin with matching coordinates (you might want to handle precision issues here)
+    const bin = await Bin.findOne({
+      lat: lat,
+      lng: lng,
+    });
+
+    if (!bin) {
+      return res.status(404).json({ message: 'No bin found with matching coordinates' });
+    }
+
+    await notificationapi.init(
+      process.env.NOTI_API_CLIENTID, // clientId
+      process.env.NOTI_API_CLIENTSEC// clientSecret
+    )
+
+    // Send a notification to the bin's number , bin.number
+    const notificationResponse = await notificationapi.send({
+      notificationId: 'review_required',
+      user: {
+        id: "abhilashsarangi222@gmail.com", //user.mail
+        email: "abhilashsarangi222@gmail.com", //user.mail
+        number: "+917064077209" // user.number
+      },
+      mergeTags: {
+        "comment": "testComment",
+        "commentId": "testCommentId"
+      }
+    })
+
+    res.status(200).json({ message: 'Notification sent successfully', bin});
+  } catch (error) {
+    console.error('Error notifying bin:', error);
+    res.status(500).json({ message: 'Error notifying bin' });
   }
 };
 
@@ -56,4 +98,4 @@ const getAllBins = async (req, res) => {
   }
 };
 
-module.exports = { createBin, getAllBins };
+module.exports = { createBin, getAllBins ,notifyBin };

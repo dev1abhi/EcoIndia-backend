@@ -1,6 +1,6 @@
 // routes/binRoutes.js
 const express = require('express');
-const {  getAllBins, createBin } = require('../controllers/binController'); // Import the controller functions
+const {  getAllBins, createBin , notifyBin } = require('../controllers/binController'); // Import the controller functions
 
 const router = express.Router();
 
@@ -9,6 +9,8 @@ const router = express.Router();
 router.post('/create-bin', (req, res) => {
     createBin(req, res, req.io);  // Pass io to createBin
   });
+
+router.post('/notify-bin', notifyBin); 
 
 // Route to fetch all bin locations
 router.get('/all-bins', getAllBins);
