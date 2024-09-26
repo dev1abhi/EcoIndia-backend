@@ -1,6 +1,6 @@
 // routes/binRoutes.js
 const express = require('express');
-const {  getAllBins, createBin , notifyBin , deleteBinByUserLocation } = require('../controllers/binController'); // Import the controller functions
+const {  getAllBins, createBin , notifyBin , deleteBinByUserLocation , deleteallbins} = require('../controllers/binController'); // Import the controller functions
 
 const router = express.Router();
 
@@ -21,6 +21,6 @@ router.post('/delete-bin', (req, res) => {
 
 // Route to fetch all bin locations
 router.get('/all-bins', getAllBins);
-router.get('/deleteallbin', deleteallbins);
+router.get('/deleteallbins', deleteallbins);
 
 module.exports = router;
