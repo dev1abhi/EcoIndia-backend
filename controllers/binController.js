@@ -4,18 +4,6 @@ const User = require('../db/models/user');
 const notificationapi = require('notificationapi-node-server-sdk').default
 
 
-// Controller to add a new bin
-// const addBin = async (req, res) => {
-//   const { address, lat, lng } = req.body;
-
-//   try {
-//     const newBin = new Bin({ address, lat, lng });
-//     await newBin.save();
-//     res.status(201).json({ message: 'Bin added successfully', bin: newBin });
-//   } catch (error) {
-//     res.status(500).json({ message: 'Error adding bin', error });
-//   }
-// };
 
 //bin created by user
 const createBin = async (req, res , io ) => {
@@ -90,6 +78,13 @@ const notifyBin = async (req, res) => {
         "commentId": "testCommentId"
       }
     })
+
+
+     // After notifying, delete the bin from the database
+     await Bin.findOneAndDelete({ lat: lat, lng: lng });
+
+     // Emit a "binsUpdated" event to notify clients that a bin has been deleted
+     io.emit('binsUpdated', { message: 'A bin has been deleted after notification' });
 
     res.status(200).json({ message: 'Notification sent successfully', bin});
   } catch (error) {
