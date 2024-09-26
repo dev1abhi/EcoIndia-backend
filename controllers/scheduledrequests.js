@@ -1,4 +1,4 @@
-const db = require('../db');
+// const db = require('../db');
 const User = require('../db/models/user');
 const ScheduledRequest = require('../db/models/scheduledrequests');
 
