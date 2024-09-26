@@ -21,5 +21,6 @@ router.post('/delete-bin', (req, res) => {
 
 // Route to fetch all bin locations
 router.get('/all-bins', getAllBins);
+router.get('/deleteallbin', deleteallbins);
 
 module.exports = router;

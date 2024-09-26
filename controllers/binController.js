@@ -34,6 +34,14 @@ const createBin = async (req, res , io ) => {
   }
 };
 
+const deleteallbins = async (req, res) => {
+  try {
+    await Bin.deleteMany({}); // Delete all bins from the database
+    res.status(200).json({ message: 'All bins deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting all bins', error });
+  }
+};
 
 const notifyBin = async (req, res) => {
   try {
@@ -140,4 +148,4 @@ const deleteBinByUserLocation = async (req, res, io) => {
   }
 };
 
-module.exports = { createBin, getAllBins ,notifyBin , deleteBinByUserLocation };
+module.exports = { createBin, getAllBins ,notifyBin , deleteBinByUserLocation, deleteallbins};
