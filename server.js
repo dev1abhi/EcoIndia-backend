@@ -14,7 +14,7 @@ const litterLogRoutes = require('./routes/litterLogRoutes');
 const eventRoutes = require('./routes/eventRoutes');
 const userRoutes = require('./routes/userRoutes');
 const binRoutes = require('./routes/binRoutes');
-
+const scheduleroutes = require('./routes/scheduleRoutes');
 require('dotenv').config();
 require('./db/db');  
 
@@ -58,6 +58,7 @@ app.use('/truck', truckRoutes);
 app.use('/events', eventRoutes); 
 app.use('/litterlogs', litterLogRoutes);
 app.use('/users', userRoutes);
+app.use('/schedulerequests', scheduleroutes);
 
 // Socket.io instance to be used in the controllers
 app.set('socketio', io);
