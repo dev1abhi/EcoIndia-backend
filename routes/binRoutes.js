@@ -10,7 +10,10 @@ router.post('/create-bin', (req, res) => {
     createBin(req, res, req.io);  // Pass io to createBin
   });
 
-router.post('/notify-bin', notifyBin); 
+//router.post('/notify-bin', notifyBin); 
+router.post('/notify-bin', (req, res) => {
+  notifyBin(req, res, req.io);  
+});
 
 router.post('/delete-bin', (req, res) => {
   deleteBinByUserLocation(req, res, req.io);  // Also pass req.io if using socket.io for real-time updates
